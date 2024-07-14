@@ -2,8 +2,36 @@ import DoughnutChart from "../components/Doughnut";
 import Banner from "../components/Banner";
 import Rank from "../components/Rank";
 import CountUp from 'react-countup';
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+interface DataItem {
+    handle: string;
+    no: number;
+    title: string;
+    tier: string;
+    time: string;
+}
+  
 export default function Main() {
     const square = Array.from({ length: 120 }).map((_, idx) => { return idx; })
+    const [data, setData] = useState<DataItem[]>([]);
+
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get('http://localhost:4000/');
+            setData(response.data);
+            console.log(response.data)
+        } catch (error) {
+          console.error('데이터를 가져오는 중 오류가 발생했습니다:', error);
+        }
+      };
+  
+      fetchData();
+    }, []);
+
     return (
         <div className="overflow-hidden">
             <Banner />
@@ -26,10 +54,10 @@ export default function Main() {
                 </div>
                 <Rank />
             </div>
-            <div className="max-w-[1280px] mx-auto px-4 mt-40">
+            {/* <div className="max-w-[1280px] mx-auto px-4 mt-40">
                 <p className="font-pretendard text-3xl md:text-5xl font-semibold">벌금 현황</p>
                 <Rank />
-            </div>
+            </div> */}
         </div>
     )
 }
