@@ -46,11 +46,11 @@ export default function Main() {
                 </div>
             </section>
             <div className="my-20  mx-auto w-[1024px] h-fit flex flex-wrap">
-                {square.map((v) => (<div className={`w-10 h-10 rounded-md md:m-[1px] m-[0.5px]`} style={{ backgroundColor: `${v <= 28 ? "#8CD2EA" : v <= 56 ? "#5FB4DE" : v <= 84 ? "#3197D3" : "#0479C7"}` }}></div>))}
+                {square.map((v) => (<div key={`box-${v}`} className={`w-10 h-10 rounded-md md:m-[1px] m-[0.5px]`} style={{ backgroundColor: `${v <= 28 ? "#8CD2EA" : v <= 56 ? "#5FB4DE" : v <= 84 ? "#3197D3" : "#0479C7"}` }}></div>))}
             </div>
             <div className="max-w-[1280px] mx-auto px-4">
                 <div className="flex items-center">
-                    <p className="font-pretendard text-3xl md:text-5xl font-semibold">7/14 Ranking</p><img src="/assets/images/solvedlogo.svg" width={80} className="ml-4 mt-2" />
+                    <p className="font-pretendard text-2xl md:text-4xl font-semibold">7/14 Ranking</p><img src="/assets/images/solvedlogo.svg" width={60} className="ml-4 mt-2" />
                 </div>
                 <Rank />
             </div>

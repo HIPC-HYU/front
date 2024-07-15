@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { 
-  TextField, 
-  Button, 
-  Container, 
-  Typography, 
-  Box,
-  Alert
+import {
+    TextField,
+    Button,
+    Container,
+    Typography,
+    Box,
+    Alert
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 interface SignInProps {
     id: string;
@@ -43,48 +44,53 @@ const SignIn: React.FC = () => {
     };
 
     return (
-        <Container maxWidth="sm" className="mt-10">
-            <Box className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                <Typography variant="h4" className="mb-6 text-center text-gray-700">
-                    로그인
-                </Typography>
-                {error && (
-                    <Alert severity="error" className="mb-4">
-                        {error}
-                    </Alert>
-                )}
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <TextField
-                        fullWidth
-                        label="아이디"
-                        name="id"
-                        value={formData.id}
-                        onChange={handleChange}
-                        required
-                        variant="outlined"
-                    />
-                    <TextField
-                        fullWidth
-                        label="비밀번호"
-                        name="password"
-                        type="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                        variant="outlined"
-                    />
-                    <Button 
-                        type="submit" 
-                        variant="contained" 
-                        color="primary"
-                        fullWidth
-                        className="mt-4 bg-blue-500 hover:bg-blue-600"
-                    >
+        <div className='min-h-screen pt-40'>
+            <Container maxWidth="sm" className="pt-10 flex">
+                <Box className="bg-white shadow-md rounded px-8 pt-10 pb-8 mb-4">
+                    <Typography variant="h4" className="pb-8 text-center text-gray-700">
                         로그인
-                    </Button>
-                </form>
-            </Box>
-        </Container>
+                    </Typography>
+                    {error && (
+                        <Alert severity="error" className="mb-4">
+                            {error}
+                        </Alert>
+                    )}
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <TextField
+                            fullWidth
+                            label="아이디"
+                            name="id"
+                            value={formData.id}
+                            onChange={handleChange}
+                            required
+                            variant="outlined"
+                        />
+                        <TextField
+                            fullWidth
+                            label="비밀번호"
+                            name="password"
+                            type="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
+                            variant="outlined"
+                        />
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                            className="mt-4 bg-blue-500 hover:bg-blue-600"
+                        >
+                            로그인
+                        </Button>
+                    </form>
+                    <div className='font-pretendard text-blue-600 mt-4 flex justify-end'>
+                        <Link to={'/signup'}>회원가입</Link>
+                    </div>
+                </Box>
+            </Container>
+        </div>
     );
 };
 
