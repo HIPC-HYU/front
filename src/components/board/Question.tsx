@@ -12,7 +12,7 @@ type questionDataType = {
     time: string;
 };
 
-export default function QuestionList({ props }: questionDataType) {
+export default function QuestionList({ props }: { props: questionDataType }) {
     return (
         <div className="w-full h-12 border font-pretendard flex items-center border-gray-300 px-10 rounded-lg">
             {props.done ? <Badgesm color="#00c471" text="해결" /> : <Badgesm color="#ced4da" text="미해결" />}

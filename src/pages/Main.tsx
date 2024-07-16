@@ -1,30 +1,20 @@
 import DoughnutChart from "../components/Doughnut";
 import Banner from "../components/Banner";
-import Rank from "../components/Rank";
 import CountUp from 'react-countup';
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
-import BarRank from "../components/BarRank";
 import MainRank from "../components/rank/MainRank";
 
-interface DataItem {
-    handle: string;
-    no: number;
-    title: string;
-    tier: string;
-    time: string;
-}
+
 
 export default function Main() {
     const square = Array.from({ length: 120 }).map((_, idx) => { return idx; })
-    const [data, setData] = useState<DataItem[]>([]);
 
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get('http://localhost:4000/');
-                setData(response.data);
                 console.log(response.data)
             } catch (error) {
                 console.error('데이터를 가져오는 중 오류가 발생했습니다:', error);

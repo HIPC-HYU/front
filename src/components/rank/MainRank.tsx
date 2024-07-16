@@ -1,6 +1,5 @@
 import { useState } from "react";
 import BarRank from "../BarRank";
-import Rank from "../Rank";
 interface dataType { boj_id: string, name: string, cnt: number };
 const RankData: dataType[] = [{ boj_id: 'user3', name: '사용자3', cnt: 15 },
 { boj_id: 'user7', name: '사용자7', cnt: 10 },
@@ -40,7 +39,7 @@ export default function MainRank() {
                     <tbody>
                         {RankData.map((v, i) => (
                             <tr key={`rank-${i}`} className="text-center" style={{ backgroundColor: `${i % 2 === 1 ? 'rgb(243 244 246)' : 'white'}` }}>
-                                <td className="text-xl">#{i}</td>
+                                <td className="text-xl">#{i+1}</td>
                                 <td className="flex items-center justify-center h-full gap-1">{v.boj_id}<img src="/assets/images/gold2.svg" width={16}/></td>
                                 <td>{v.name}</td>
                                 <td>{v.cnt}</td>

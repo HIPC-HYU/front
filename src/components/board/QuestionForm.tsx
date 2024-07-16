@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, Paper } from '@mui/material';
-import { Question } from '../types';
+import { Question } from '../../types';
 import CodeSpace from './CodeSpace';
 
 const QuestionForm: React.FC = () => {
