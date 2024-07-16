@@ -4,6 +4,8 @@ import Rank from "../components/Rank";
 import CountUp from 'react-countup';
 import { useEffect, useState } from "react";
 import axios from "axios";
+import BarRank from "../components/BarRank";
+import MainRank from "../components/rank/MainRank";
 
 interface DataItem {
     handle: string;
@@ -12,24 +14,24 @@ interface DataItem {
     tier: string;
     time: string;
 }
-  
+
 export default function Main() {
     const square = Array.from({ length: 120 }).map((_, idx) => { return idx; })
     const [data, setData] = useState<DataItem[]>([]);
 
-  
+
     useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get('http://localhost:4000/');
-            setData(response.data);
-            console.log(response.data)
-        } catch (error) {
-          console.error('데이터를 가져오는 중 오류가 발생했습니다:', error);
-        }
-      };
-  
-      fetchData();
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://localhost:4000/');
+                setData(response.data);
+                console.log(response.data)
+            } catch (error) {
+                console.error('데이터를 가져오는 중 오류가 발생했습니다:', error);
+            }
+        };
+
+        fetchData();
     }, []);
 
     return (
@@ -48,12 +50,7 @@ export default function Main() {
             <div className="my-20  mx-auto w-[1024px] h-fit flex flex-wrap">
                 {square.map((v) => (<div key={`box-${v}`} className={`w-10 h-10 rounded-md md:m-[1px] m-[0.5px]`} style={{ backgroundColor: `${v <= 28 ? "#8CD2EA" : v <= 56 ? "#5FB4DE" : v <= 84 ? "#3197D3" : "#0479C7"}` }}></div>))}
             </div>
-            <div className="max-w-[1280px] mx-auto px-4">
-                <div className="flex items-center">
-                    <p className="font-pretendard text-2xl md:text-4xl font-semibold">7/14 Ranking</p><img src="/assets/images/solvedlogo.svg" width={60} className="ml-4 mt-2" />
-                </div>
-                <Rank />
-            </div>
+           <MainRank/>
             {/* <div className="max-w-[1280px] mx-auto px-4 mt-40">
                 <p className="font-pretendard text-3xl md:text-5xl font-semibold">벌금 현황</p>
                 <Rank />

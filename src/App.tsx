@@ -8,6 +8,7 @@ import SignUp from './pages/auth/signup'
 import SignIn from './pages/auth/signin'
 import MyPage from './pages/mypage'
 import Question from './pages/Question'
+import BarRank from './components/BarRank.tsx'
 import BoardList from './pages/board/BoardList.tsx'
 function App() {
   
@@ -20,6 +21,7 @@ function App() {
         <Route path='/signup' element={<SignUp />} />
         <Route path='/signin' element={<SignIn/>} />
         <Route path='/rank' element={<RankPage />} />
+        <Route path='/barrank' element={<BarRank />} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/board'>
           <Route path='list'>
