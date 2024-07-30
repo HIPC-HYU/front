@@ -1,8 +1,7 @@
-import Rank from "../components/Rank"
+import MainRank from "../components/rank/MainRank"
 
 export default function RankPage() {
-    return (<div className="max-w-[1280px] h-screen mx-auto px-4 pt-40">
-        <p className="font-pretendard text-3xl md:text-5xl font-semibold">이번분기 랭크</p>
-        <Rank />
+    return (<div className="w-full flex-1 mx-auto px-4 pt-20">
+        <MainRank />
     </div>)
 }

@@ -1,5 +1,5 @@
 import { Doughnut } from 'react-chartjs-2';
-import {Chart, ArcElement} from 'chart.js'
+import { Chart, ArcElement } from 'chart.js'
 Chart.register(ArcElement);
 const data = {
     labels: ["목표", "남은 문제"],
@@ -28,6 +28,8 @@ const options = {
     },
 };
 export default function DoughnutChart() {
-    return (<Doughnut data={data} options={options}></Doughnut>
+    return (
+        <Doughnut data={data} options={options} className='-mt-5'>
+        </Doughnut>
     )
 }

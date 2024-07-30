@@ -1,31 +1,27 @@
 import DoughnutChart from "../components/Doughnut";
 import Banner from "../components/Banner";
 import CountUp from 'react-countup';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import MainRank from "../components/rank/MainRank";
 
-
-
 export default function Main() {
+    const [data, setData] = useState(null);
     const square = Array.from({ length: 120 }).map((_, idx) => { return idx; })
-
-
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('http://localhost:4000/');
-                console.log(response.data)
-            } catch (error) {
-                console.error('데이터를 가져오는 중 오류가 발생했습니다:', error);
-            }
-        };
-
         fetchData();
     }, []);
-
+    async function fetchData (){
+        try {
+            const response = await axios.get('http://localhost:4000/api/state');
+            console.log(response.data)
+            setData(response.data);
+        } catch (error) {
+            console.error('데이터를 가져오는 중 오류가 발생했습니다:', error);
+        }
+    };
     return (
-        <div className="overflow-hidden">
+        <div className="w-full flex-1 overflow-x-hidden">
             <Banner />
             <section className="w-full min-h-80 mt-24 flex">
                 <div className="flex md:flex-row justify-between flex-col max-w-[1280px] w-full mx-auto px-4">
@@ -40,7 +36,8 @@ export default function Main() {
             <div className="my-20  mx-auto w-[1024px] h-fit flex flex-wrap">
                 {square.map((v) => (<div key={`box-${v}`} className={`w-10 h-10 rounded-md md:m-[1px] m-[0.5px]`} style={{ backgroundColor: `${v <= 28 ? "#8CD2EA" : v <= 56 ? "#5FB4DE" : v <= 84 ? "#3197D3" : "#0479C7"}` }}></div>))}
             </div>
-           <MainRank/>
+            {JSON.stringify(data)}
+            <MainRank />
             {/* <div className="max-w-[1280px] mx-auto px-4 mt-40">
                 <p className="font-pretendard text-3xl md:text-5xl font-semibold">벌금 현황</p>
                 <Rank />

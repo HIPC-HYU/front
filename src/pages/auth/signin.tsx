@@ -1,97 +1,65 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import {
-    TextField,
-    Button,
-    Container,
-    Typography,
-    Box,
-    Alert
-} from '@mui/material';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { User } from 'firebase/auth';
+import { signInWithGoogle, signOutUser, auth } from '../../auth/firebaseConfig';
+import { FaGoogle, FaSignOutAlt } from 'react-icons/fa';
 
-interface SignInProps {
-    id: string;
-    password: string;
-}
+const App: React.FC = () => {
+  const [user, setUser] = useState<User | null>(null);
 
-const SignIn: React.FC = () => {
-    const [formData, setFormData] = useState<SignInProps>({
-        id: '',
-        password: ''
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
     });
-    const [error, setError] = useState<string | null>(null);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
+    return () => unsubscribe();
+  }, []);
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setError(null);
-        try {
-            const response = await axios.post('http://localhost:4000/auth/signin', formData);
-            console.log('로그인 성공:', response.data);
-            // 여기에 로그인 성공 후 처리 (예: 홈 페이지로 리다이렉트)
-        } catch (error) {
-            console.error('로그인 실패:', error);
-            setError('로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.');
-        }
-    };
+  const handleSignIn = async () => {
+    const user = await signInWithGoogle();
+    if (user) {
+      console.log("로그인 성공:", user);
+    }
+  };
 
-    return (
-        <div className='min-h-screen pt-40'>
-            <Container maxWidth="sm" className="pt-10 flex">
-                <Box className="bg-white shadow-md rounded px-8 pt-10 pb-8 mb-4">
-                    <Typography variant="h4" className="pb-8 text-center text-gray-700">
-                        로그인
-                    </Typography>
-                    {error && (
-                        <Alert severity="error" className="mb-4">
-                            {error}
-                        </Alert>
-                    )}
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        <TextField
-                            fullWidth
-                            label="아이디"
-                            name="id"
-                            value={formData.id}
-                            onChange={handleChange}
-                            required
-                            variant="outlined"
-                        />
-                        <TextField
-                            fullWidth
-                            label="비밀번호"
-                            name="password"
-                            type="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                            variant="outlined"
-                        />
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                            fullWidth
-                            className="mt-4 bg-blue-500 hover:bg-blue-600"
-                        >
-                            로그인
-                        </Button>
-                    </form>
-                    <div className='font-pretendard text-blue-600 mt-4 flex justify-end'>
-                        <Link to={'/signup'}>회원가입</Link>
-                    </div>
-                </Box>
-            </Container>
-        </div>
-    );
+  const handleSignOut = async () => {
+    await signOutUser();
+    console.log("로그아웃 완료");
+  };
+
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-cyan-500 to-blue-200">
+      <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">
+        {user ? (
+          <div className="text-center">
+            <img 
+              src={user.photoURL || 'https://via.placeholder.com/100'} 
+              alt="Profile" 
+              className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-purple-400"
+            />
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">안녕하세요, {user.displayName}님!</h2>
+            <p className="text-gray-600 mb-6">{user.email}</p>
+            <button 
+              onClick={handleSignOut}
+              className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out flex items-center justify-center w-full"
+            >
+              <FaSignOutAlt className="mr-2" /> 로그아웃
+            </button>
+          </div>
+        ) : (
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-gray-800 mb-6">환영합니다</h2>
+            <p className="text-gray-600 mb-8">계속하려면 로그인해 주세요.</p>
+            <button 
+              onClick={handleSignIn}
+              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full transition duration-300 ease-in-out flex items-center justify-center w-full"
+            >
+              <FaGoogle className="mr-2" /> Google로 로그인
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
-export default SignIn;
+export default App;
