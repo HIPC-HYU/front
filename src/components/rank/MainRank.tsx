@@ -1,58 +1,25 @@
 import { useState, useEffect } from "react";
 import BarRank from "./BarRank";
-import { motion } from "framer-motion";
+import axios from "axios";
 
 interface dataType { boj_id: string, name: string, cnt: number };
 
-const RankData: dataType[] = [
-    { boj_id: 'user3', name: '사용자3', cnt: 15 },
-    { boj_id: 'user7', name: '사용자7', cnt: 10 },
-    { boj_id: 'ys_10', name: '신윤수', cnt: 8 },
-    { boj_id: 'user9', name: '사용자9', cnt: 5 },
-    { boj_id: 'user5', name: '사용자5', cnt: 4 },
-    { boj_id: 'user6', name: '사용자6', cnt: 3 },
-    { boj_id: 'user2', name: '사용자2', cnt: 2 },
-    { boj_id: 'user8', name: '사용자8', cnt: 2 },
-    { boj_id: 'user4', name: '사용자4', cnt: 2 },
-];
-
-const RankData2: dataType[] = [
-    { boj_id: 'user3', name: '사용자3', cnt: 1 },
-    { boj_id: 'user7', name: '사용자7', cnt: 2 },
-    { boj_id: 'ys_10', name: '신윤수', cnt: 8 },
-    { boj_id: 'user9', name: '사용자9', cnt: 5 },
-    { boj_id: 'user5', name: '사용자5', cnt: 4 },
-    { boj_id: 'user6', name: '사용자6', cnt: 3 },
-    { boj_id: 'user2', name: '사용자2', cnt: 4 },
-    { boj_id: 'user8', name: '사용자8', cnt: 2 },
-    { boj_id: 'user4', name: '사용자4', cnt: 2 },
-];
-
-const RankData3: dataType[] = [
-    { boj_id: 'user3', name: '사용자3', cnt: 9 },
-    { boj_id: 'user7', name: '사용자7', cnt: 10 },
-    { boj_id: 'ys_10', name: '신윤수', cnt: 8 },
-    { boj_id: 'user9', name: '사용자9', cnt: 5 },
-    { boj_id: 'user5', name: '사용자5', cnt: 4 },
-    { boj_id: 'user6', name: '사용자6', cnt: 3 },
-    { boj_id: 'user2', name: '사용자2', cnt: 2 },
-    { boj_id: 'user8', name: '사용자8', cnt: 2 },
-    { boj_id: 'user4', name: '사용자4', cnt: 2 },
-];
 export default function MainRank() {
     const [rankSelect, setRankSelect] = useState([true, false, false]);
-    const [sortedData, setSortedData] = useState<dataType[]>([]);
+    const [rankData,setRankData] = useState<dataType[]|null>(null)
     useEffect(() => {
-        let selectedData;
-        if (rankSelect[0]) selectedData = RankData;
-        else if (rankSelect[1]) selectedData = RankData2;
-        else selectedData = RankData3;
 
-        setSortedData([...selectedData].sort((a, b) => b.cnt - a.cnt));
     }, [rankSelect]);
+    async function getRank() {
+        try {
+            const res = await axios.get('https://localhost:3001/api/rank');
+        } catch (error) {
+            console.log(error);
+        }
 
+    } 
     return (
-        <div className="max-w-7xl w-full mx-auto font-pretendard lg:px-4">
+        <div className="max-w-6xl w-full mx-auto font-pretendard lg:px-4 mb-20">
             <div className="flex items-center">
                 <p className="text-2xl lg:text-4xl pl-4 font-semibold">Ranking</p>
                 <img src="/assets/images/solvedlogo.svg" width={60} className="ml-4 mt-2" alt="Solved Logo" />
@@ -71,10 +38,7 @@ export default function MainRank() {
             </div>
             <div className="flex flex-col lg:flex-row lg:justify-between">
                 <BarRank RankData={sortedData} rankSelect={rankSelect} />
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
+                <div
                     className="lg:max-w-[33%] w-[90%] mx-auto mt-10 h-fit bg-white shadow-lg rounded-lg overflow-hidden"
                 >
                     <table className="w-full">
@@ -111,7 +75,7 @@ export default function MainRank() {
                             ))}
                         </tbody>
                     </table>
-                </motion.div>
+                </div>
             </div>
         </div>
     )

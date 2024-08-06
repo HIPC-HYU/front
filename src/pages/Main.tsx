@@ -23,10 +23,10 @@ export default function Main() {
     return (
         <div className="w-full flex-1 overflow-x-hidden">
             <Banner />
-            <section className="w-full min-h-80 mt-24 flex">
-                <div className="flex md:flex-row justify-between flex-col max-w-[1280px] w-full mx-auto px-4">
-                    <h1 className="font-pretendard text-2xl md:text-4xl font-bold">오늘까지 HIPE는 총 <CountUp end={5400} duration={2} />문제 <br />이번 분기에 <CountUp end={9} duration={2} />문제를 풀었습니다.<br /><br />이번 분기 문제 수 1위: ys10, <br />이번 분기 랭크 상승 1위: zcem8929입니다</h1>
-                    <div className="w-40 md:w-64 h-64">
+            <section className="w-full my-24 flex">
+                <div className="flex md:flex-row justify-between flex-col max-w-5xl w-full mx-auto px-4">
+                    <h1 className="font-pretendard text-xl md:text-3xl font-bold">오늘까지 HIPE는 총 <CountUp end={5400} duration={2} />문제 <br />이번 분기에 <CountUp end={9} duration={2} />문제를 풀었습니다.<br /><br />이번 분기 문제 수 1위: ys10, <br />이번 분기 랭크 상승 1위: zcem8929입니다</h1>
+                    <div className="hidden md:flex md:w-52 md:h-52">
                         <DoughnutChart />
                     </div>
                     <div>

@@ -17,7 +17,7 @@ const data = {
 };
 
 const options = {
-    cutout: "60%",
+    cutout: "70%",
     plugins: {
         legend: {
             display: false,
@@ -29,7 +29,7 @@ const options = {
 };
 export default function DoughnutChart() {
     return (
-        <Doughnut data={data} options={options} className='-mt-5'>
+        <Doughnut data={data} options={options} className='-mt-6'>
         </Doughnut>
     )
 }
